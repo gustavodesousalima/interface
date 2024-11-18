@@ -53,39 +53,30 @@
         // Tabela onde será exibido o resultado
         const tabelaResposta = document.getElementById("tabelaResposta");
 
-        // function buscarProduto() {
-        //     let url = "http://localhost:8080/produtos/nome/" + document.getElementById("nomecoletado").value;
+        function buscarProduto() {
+            let url = "http://localhost:8080/produtos/buscar/nome/" + document.getElementById("nomecoletado").value;
 
-        //     const response = await fetch(url)
-        //         .then(response => {
-        //             return response.json();
-        //         })
-        //         .then(resposta => {
-        //             let linha = "<thead><tr><th>ID do produto</th><th>Nome do produto</th><th>Preço</th><th>Tipo</th><th>QTD Estoque</th><th>Descrição</th></tr></thead>";
-        //             linha += "<tr><td>" + resposta.idProduto + "</td><td>" + resposta.nomeProduto + "</td><td>" + resposta.preco +
-        //                 "</td><td>" + resposta.tipo + "</td><td>" + resposta.quantEstoque + "</td><td>" + resposta.descricao + "</td></tr>";
-        //             tabelaResposta.innerHTML = linha;
-        //         })
-        //         .catch(error => {
-        //             console.error('Erro:', error);
-        //         });
+            fetch(url)
+                .then(response => {
+                    return response.json();
+                })
+                .then(resposta => {
 
-        //     fetch(url)
-        //         .then(response => {
-        //             return response.json();
-        //         })
-        //         .then(resposta => {
-        //             let linha = "<thead><tr><th>ID do produto</th><th>Nome do produto</th><th>Preço</th><th>Tipo</th><th>QTD Estoque</th><th>Descrição</th></tr></thead>";
-        //             resposta.forEach(element => {
-        //                 linha += "<tr><td>" + element.idProduto + "</td><td>" + element.nomeProduto + "</td><td>" + element.preco +
-        //                     "</td><td>" + element.tipo + "</td><td>" + element.quantEstoque + "</td><td>" + element.descricao + "</td></tr>";
-        //             });
-        //             tabelaResposta.innerHTML = linha;
-        //         })
-        //         .catch(error => {
-        //             console.error('Erro:', error);
-        //         });
-        // }
+                    if(resposta.length == 0){
+                        tabelaResposta.innerHTML = "<thead><tr><th>Nenhum produto encontrado</th></tr></thead>";
+                        return;
+                    }
+                    let linha = "<thead><tr><th>ID do produto</th><th>Nome do produto</th><th>Preço</th><th>Tipo</th><th>QTD Estoque</th><th>Descrição</th></tr></thead>";
+                    resposta.forEach(element => {
+                        linha += "<tr><td>" + element.idProduto + "</td><td>" + element.nomeProduto + "</td><td>" + element.preco +
+                            "</td><td>" + element.tipo + "</td><td>" + element.quantEstoque + "</td><td>" + element.descricao + "</td></tr>";
+                    });
+                    tabelaResposta.innerHTML = linha;
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
     </script>
 </body>
 
